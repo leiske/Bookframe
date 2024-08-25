@@ -16,7 +16,8 @@ Clone the repo and run `bun link`. Now you can run `bookframe` and can import it
 3. Open `http://localhost:3000/install` in your browser to install the bookmarklet.
 4. Click your bookmark and watch each run use your latest code.
 
-note: some websites CSP policies may prevent the use of the hot reload bookmarklet. In this case, you can use the standalone bookmarklet output and update it as you make changes.
+> [!NOTE]
+> Some websites CSP policies may prevent the hot reload bookmarklet from fetching. In this case, you can use the standalone bookmarklet output and update it as you make changes.
 
 #### Production
 
