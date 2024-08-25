@@ -9,7 +9,7 @@ Built with Bun, Bookframe is a new take on the classic bookmarklet development p
 For now this is not published on NPM. I'll get around to it soon. 
 Clone the repo and run `bun link`. Now you can run `bookframe` and can import it in your project.
 
-[![DRAGNDROPME](https://raw.githubusercontent.com/leiske/Bookframe/ec454b331eaf6246c7757553c45b342354655c17/src/download.svg)](javascript:void%20function(){alert(%22foo%22)}();)
+[<img src="https://raw.githubusercontent.com/leiske/Bookframe/ec454b331eaf6246c7757553c45b342354655c17/src/download.svg" alt="Drag n' Drop this on your bookmark bar" height=48 />](javascript:void%20function(){alert(%22foo%22)}();)
 
 #### Development
 
