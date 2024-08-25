@@ -27,29 +27,42 @@ export async function buildDevBookmarklet({ port = DEFAULT_PORT }): Promise<stri
   return finalBookmarklet;
 }
 
-export async function buildBookmarklet(entrypoint: string, opts = {}): Promise<string> {
+type BuildOptions = {
+  entrypoint: string,
+  minify?: boolean,
+  urlencode?: boolean,
+};
+
+export async function buildBookmarklet({ entrypoint, minify = true, urlencode = true }: BuildOptions): Promise<string> {
+
   const builtBookmarklet = await Bun.build({
     entrypoints: [entrypoint],
+    minify,
   });
 
   if (!builtBookmarklet.success) {
     builtBookmarklet.logs.forEach((log) => {
       console.error(log);
     });
+
     throw new Error('Build failed! See logs above for more information.');
   }
 
   const [output] = builtBookmarklet.outputs;
   if (!output) {
-    throw new Error('No output found in the build! Is the path correct?');
+    builtBookmarklet.logs.forEach((log) => {
+      console.error(log);
+    });
+
+    throw new Error('No output found in the build! See logs above for more information.');
   }
 
   const bundledBookmarklet = await output.text();
 
   const finalBookmarklet = bookmarkleter(bundledBookmarklet, {
     iife: true,
-    mangleVars: true,
-    ...opts,
+    mangleVars: minify,
+    urlencode,
   });
 
   return finalBookmarklet;

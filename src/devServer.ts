@@ -11,7 +11,7 @@ const BOOKMARKLET_ROUTE = '/bookmarklet';
 
 async function getInstallPage({ entrypoint, port }: { entrypoint: string, port: number }) {
   return new Response(buildBookmarkletInstallPage(
-    await buildBookmarklet(entrypoint),
+    await buildBookmarklet({ entrypoint }),
     await buildDevBookmarklet({ port }),
   ), {
       headers: {
@@ -20,11 +20,13 @@ async function getInstallPage({ entrypoint, port }: { entrypoint: string, port: 
     });
 }
 
-export function runDevServer({ entrypoint, port, installer: openInstallerOnStart }: {
+type BookframeDevServerOptions = {
   entrypoint: string,
   port: number,
   installer: boolean,
-}) {
+};
+
+export function runDevServer({ entrypoint, port, installer: openInstallerOnStart }: BookframeDevServerOptions) {
 
   const installerUrl = `http://localhost:${port}${INSTALLER_ROUTE}`;
 
@@ -45,7 +47,8 @@ export function runDevServer({ entrypoint, port, installer: openInstallerOnStart
           return await getInstallPage({ entrypoint, port });
 
         case BOOKMARKLET_ROUTE:
-          return new Response(await buildBookmarklet(entrypoint, { urlencode: false }));
+          // this gets fed to a script tag so do not url encode
+          return new Response(await buildBookmarklet({ entrypoint, urlencode: false }));
 
         default:
           return new Response('Not found', { status: 404 });
