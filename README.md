@@ -26,9 +26,9 @@ Bookframe supports three methods of distributing your bookmarklet:
 1. Standalone code output: `bookframe build bookmarklet.ts`
     * good when you just want the dang thing in stdout
 2. Installer page output: `bookframe build bookmarklet.ts --installer`
-    * good for hosting on a website for easy installation
+    * good for hosting on a website for easy distribution
 3. Embeddable button output: `bookframe build bookmarklet.ts --button`
-    * good for sharing on a wiki page or in a README
+    * good for sharing on a wiki page or a blog
 
 ### Included Helpers
 
