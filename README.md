@@ -1,6 +1,6 @@
 # Bookframe
 
-Bookframe speeds up the development cycle of [bookmarklets](https://wikipedia.org/wiki/Bookmarklet) by providing hot reload, a standard library, and an install page generator.
+Bookframe speeds up the development cycle of [bookmarklets](https://wikipedia.org/wiki/Bookmarklet) by providing hot reload, small helper functions, and an install page generator.
 
 Built with Bun, Bookframe is a new take on the classic bookmarklet development process.
 
@@ -8,49 +8,51 @@ Built with Bun, Bookframe is a new take on the classic bookmarklet development p
 
 #### Development
 
-You're building a new bookmarklet and want to see your changes everytime you press the bookmark. Bookframe provides a development server that automatically ships the latest built and minified code to your browser.
-
 1. Create a new JavaScript (or TypeScript) file: `echo 'alert("Hello, world!")' >> bookmarklet.ts`
-2. Run the Bookframe development server with your code: `bunx bookframe dev bookmarklet.ts`
-3. Open `http://localhost:3000/install` in your browser to get the hot reload bookmarklet.
-4. Click your bookmarklet and watch each run use your latest code.
+2. Run the Bookframe development server passing in your code: `bunx bookframe dev bookmarklet.ts`
+3. Open `http://localhost:3000/install` in your browser to install the bookmarklet.
+4. Click your bookmark and watch each run use your latest code.
 
-note: some websites CSP policies may prevent the use of the hot reload bookmarklet. In this case, you can use the standalone bookmarklet output.
+note: some websites CSP policies may prevent the use of the hot reload bookmarklet. In this case, you can use the standalone bookmarklet output and update it as you make changes.
 
 #### Production
 
-You've built a bookmarklet and are ready to ship it. Bookframe supports three methods of distributing your bookmarklet:
+Bookframe supports three methods of distributing your bookmarklet:
 
-1. Standalone code output: `bunx bookframe build bookmarklet.ts`. By default `./dist/bookmarklet.min.js` will be created.
-2. Installer page output: `bunx bookframe build bookmarklet.ts --installer`. By default `./dist/installer.html` will be created.
-3. Embeddable button output: `bunx bookframe build bookmarklet.ts --button`. By default `./dist/button.html` will be created.
+1. Standalone code output: `bunx bookframe build bookmarklet.ts`
+    * good when you just want the dang thing in stdout
+2. Installer page output: `bunx bookframe build bookmarklet.ts --installer`
+    * good for hosting on a website for easy installation
+3. Embeddable button output: `bunx bookframe build bookmarklet.ts --button`
+    * good for sharing on a wiki page or in a README
 
-#### standard lib
+### Included Helpers
 
-- [] copy to clipboard
-- [] toast - time configurable, position configurable
+For easier bookmarklet development, Bookframe includes a few helper functions.
+I found these were the common tasks I was writing in my bookmarklets, so I included them in Bookframe.
 
-- [] confirm <- use `window.confirm` instead, or maybe some prettier thing that won't lose focus on the page?
-- [] prompt <- use `window.prompt` instead
-- [] alert <- use `window.alert` instead
+Aren't using them? No worries - your bookmarklets won't be bloated with unused code.
 
+#### `copyToClipboard`
 
-### Motivation
+```typescript
+copyToClipboard('Hello, world!')
+```
 
-I write a handful of bookmarklets at my job but find the development process subpar.
+#### `toast`
 
-You make a fix, copy the entire thing, paste it in the bookmarklet, realize it isn't URL encoded, go back, URL encode it, copy it, paste it in the bookmarklet, and then test it.
+```typescript
+toast('Hello, world!')
+```
 
-I want to streamline this by building on top of https://github.com/chriszarate/bookmarkleter which does a great job at minification and URL encoding.
+#### `getCookieValue`
 
-But it doesn't address my core issue of poor dev experience building these.
+```typescript
+const val = getCookieValue('cookieName');
+```
 
-Additionally, how many times have you copy pasted the same code in each bookmarklet? Why can't we have nice things and a simple standard lib of toasts, copy to clipboard, etc? Why doesn't that tree shake out the unused code? Lets try to do that. 
+#### `setCookieValue`
 
-Create minimal bookmarklets but in the modern era.
-
-
-### ideas
-
-How can I make hot reload work when I press the dev-mode bookmark?
-2. standard lib - a collection of common functions that you can use in your bookmarklets. No need to copy paste the same code over and over again.
+```typescript
+setCookieValue('cookieName', 'cookieValue');
+```
