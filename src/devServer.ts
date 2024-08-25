@@ -3,6 +3,7 @@ import open from 'open';
 import { buildBookmarkletInstallPage } from './bookmarkletInstallPage';
 import {
   buildBookmarklet,
+  buildBookmarkletJavascript,
   buildDevBookmarklet,
 } from './build';
 
@@ -50,7 +51,7 @@ export function runDevServer({ entrypoint, port, installer: openInstallerOnStart
 
         case BOOKMARKLET_ROUTE:
           // this gets fed to a script tag so do not url encode
-          return new Response(await buildBookmarklet({ entrypoint, urlencode: false }));
+          return new Response(await buildBookmarkletJavascript({ entrypoint, urlencode: false }));
 
         default:
           return new Response('Not found', { status: 404 });
