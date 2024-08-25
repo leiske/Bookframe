@@ -10,10 +10,12 @@ const INSTALLER_ROUTE = '/hotreload';
 const BOOKMARKLET_ROUTE = '/bookmarklet';
 
 async function getInstallPage({ entrypoint, port }: { entrypoint: string, port: number }) {
-  return new Response(buildBookmarkletInstallPage(
-    await buildBookmarklet({ entrypoint }),
-    await buildDevBookmarklet({ port }),
-  ), {
+  const [bookmarklet, hotReloadBookmarklet] = await Promise.all([
+    buildBookmarklet({ entrypoint }),
+    buildDevBookmarklet({ port }),
+  ]);
+  const installPage = await buildBookmarkletInstallPage(bookmarklet, hotReloadBookmarklet);
+  return new Response(installPage, {
       headers: {
         "Content-Type": "text/html",
       },
