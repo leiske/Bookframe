@@ -7,7 +7,7 @@ import {
 function copyTokenBookmarklet() {
   const token = getCookieValue('token');
   if (!token) {
-    toast('No token found!');
+    toast('No token found!', { duration: 5000 });
     return;
   }
 
