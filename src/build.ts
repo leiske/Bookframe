@@ -27,13 +27,59 @@ export async function buildDevBookmarklet({ port = DEFAULT_PORT }): Promise<stri
   return finalBookmarklet;
 }
 
-type BuildOptions = {
+type BuildJSOptions = {
   entrypoint: string,
   minify?: boolean,
   urlencode?: boolean,
 };
 
-export async function buildBookmarklet({ entrypoint, minify = true, urlencode = true }: BuildOptions): Promise<string> {
+type BuildOptions = {
+  entrypoint: string,
+  installer?: boolean,
+  button?: string,
+  output?: string,
+};
+
+export async function buildBookmarklet({
+  entrypoint,
+  installer,
+  button,
+  output,
+}: BuildOptions): Promise<string> {
+  const bookmarklet = await buildBookmarkletJavascript({ entrypoint });
+
+  if (!installer && !button) {
+    // print the bookmarklet for redirection and otherwise return it
+    return bookmarklet;
+  }
+
+  if (installer) {
+    // generate the installer page
+    // @TODO: implement an installer handlebars template that only would have the production build
+    return bookmarklet;
+  }
+
+  if (button) {
+    // generate the embeddable <a> tag
+    // @TODO: attempt to read a package.json in the folder of the script otherwise default it
+     const styles = `
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: move;
+    `.replace(/\s+/g, ' ').trim(); // Compress whitespace
+    const embeddableButton = `<a href="${bookmarklet}" style="${styles}" draggable="true" title="Drag this to your bookmark bar">Bookframe Bookmarklet</a>`;
+    return embeddableButton;
+  }
+
+  return bookmarklet;
+}
+
+export async function buildBookmarkletJavascript({ entrypoint, minify = true, urlencode = true }: BuildJSOptions): Promise<string> {
 
   const builtBookmarklet = await Bun.build({
     entrypoints: [entrypoint],

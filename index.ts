@@ -4,6 +4,7 @@ import yargs, { type Arguments, type Argv } from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { runDevServer } from './src/devServer';
 import { DEFAULT_PORT } from './src/constants';
+import { buildBookmarklet } from './src/build';
 
 await yargs(hideBin(Bun.argv))
 .command(
@@ -31,7 +32,7 @@ await yargs(hideBin(Bun.argv))
 .command(
   'build <entrypoint>',
   'Build the bookmarklet',
-  (yargs) => 
+  (yargs: Argv) => 
     yargs.positional('entrypoint', {
       describe: 'The entrypoint file',
       type: 'string',
@@ -40,8 +41,21 @@ await yargs(hideBin(Bun.argv))
       alias: 'o',
       type: 'string',
       description: 'Output file',
-    }),
-  () => console.log('Hello world')
+    })
+    .option('installer', {
+      type: 'boolean',
+      description: 'Whether to generate an installer page instead of the raw bookmarklet',
+      default: false,
+    })
+    .option('button', {
+      type: 'boolean',
+      description: 'Whether to generate an embeddable <a> tag for the bookmarklet',
+      default: false,
+    }) ,
+  async (yargs: any) => {
+    const out = await buildBookmarklet(yargs);
+    console.log(out);
+  },
 )
 .strictCommands()
 .demandCommand(1)
