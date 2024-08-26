@@ -49,6 +49,10 @@ export async function buildBookmarklet({
 }: BuildOptions): Promise<string> {
   const bookmarklet = await buildBookmarkletJavascript({ entrypoint });
 
+  if (bookmarklet.length > 2000) {
+    throw new Error('Bookmarklet is too large! Please reduce the size of your script or reevaluate your dependencies.');
+  }
+
   if (!installer && !button) {
     // print the bookmarklet for redirection and otherwise return it
     return bookmarklet;

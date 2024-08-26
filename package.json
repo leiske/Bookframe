@@ -27,7 +27,7 @@
     "./helpers": "./dist/helpers.js"
   },
   "scripts": {
-    "dev": "bun run --watch index.ts -- dev",
+    "dev": "bun run --watch index.ts --",
     "build": "bun run build.mjs"
   },
   "dependencies": {
