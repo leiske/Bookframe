@@ -1,8 +1,9 @@
 import Handlebars from "handlebars";
-import InstallPageTemplate from './installPage.hbs' with { type: "text" };
+// @ts-ignore
+import installPageTemplate from './installPage.hbs' with { type: 'text' };
 
 export async function buildBookmarkletInstallPage(bookmarklet: string, hotReloadBookmarklet: string): Promise<string> {
-  const template = Handlebars.compile(InstallPageTemplate);
+  const template = Handlebars.compile(installPageTemplate);
   return template({
     bookmarklet,
     hotReloadBookmarklet

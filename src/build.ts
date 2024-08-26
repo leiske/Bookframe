@@ -1,3 +1,4 @@
+// @ts-ignore
 import bookmarkleter from 'bookmarkleter';
 import { DEFAULT_PORT } from './constants';
 

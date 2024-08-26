@@ -59,4 +59,5 @@ await yargs(hideBin(Bun.argv))
 )
 .strictCommands()
 .demandCommand(1)
+.scriptName('bookframe')
 .parse();

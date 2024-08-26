@@ -1,0 +1,3 @@
+preload = ["./src/plugins/hbsLoader.ts"]
+[plugins]
+"hbsLoader" = "./src/plugins/hbsLoader.ts"

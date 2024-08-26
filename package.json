@@ -1,20 +1,39 @@
 {
   "name": "bookframe",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "module": "index.ts",
   "type": "module",
-  "bin": {
-    "bookframe": "./index.ts"
+  "description": "A bookmarklet framework with hot reloading, TypeScript support (via Bun), and small utilities.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leiske/Bookframe.git"
   },
+  "bugs": "https://github.com/leiske/Bookframe/issues",
+  "author": "Colby Leiske",
+  "bin": {
+    "bookframe": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "bookmarklet",
+    "bookmarkleter",
+    "framework"
+  ],
   "exports": {
     "./helpers": "./src/helpers/helpers.js"
   },
   "scripts": {
-    "dev": "bun run --watch index.ts"
+    "dev": "bun run --watch index.ts -- dev",
+    "build": "bun run build.mjs"
   },
   "dependencies": {
     "@types/yargs": "^17.0.33",
     "bookmarkleter": "^1.1.0",
+    "bun-plugin-dts": "^0.2.3",
     "chalk": "^5.3.0",
     "handlebars": "^4.7.8",
     "open": "^10.1.0",
