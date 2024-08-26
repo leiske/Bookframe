@@ -1,6 +1,6 @@
 {
   "name": "bookframe",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "module": "index.ts",
   "type": "module",
   "description": "A bookmarklet framework with hot reloading, TypeScript support (via Bun), and small utilities.",
